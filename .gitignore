@@ -1,2 +1,4 @@
-dependencies
-*.o
+install
+./*.o
+./*.s
+*.elf

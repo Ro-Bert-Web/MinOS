@@ -12,10 +12,14 @@
 .equ DELAY4, 0x800000
 
 _start:
+    ldr sp, =stack
+    ldr fp, =stack
     bl ledInit
 loop1:
     bl ledOn
     bl hold
+    ldr r0, =main
+    blx r0
     bl ledOff
     bl hold
     b loop1
@@ -54,5 +58,9 @@ halt:
     b halt
 
 .section ".data"
+.balign 4
 encodeRet: .word 0x0
 blinkRet: .word 0x0
+
+.skip 400
+stack:
