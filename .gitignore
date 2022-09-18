@@ -1,4 +1,6 @@
 install
-./*.o
-./*.s
+*.o
+*.s
 *.elf
+!c
+!asm
