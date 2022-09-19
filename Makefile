@@ -1,21 +1,22 @@
 c       := $(shell find -type f -name "*.c")
-cToAsm  := $(c:.c=.s)
-asm     := $(shell echo $(cToAsm) $(shell find -type f -name "*.s") | xargs -n1 | sort -u | xargs)
-obj     := $(cToAsm:.s=.o)
+cObj    := $(c:.c=.o)
+asm     := $(shell find -type f -name "*.s")
+asmObj  := $(asm:.s=.o)
+obj     := $(shell echo $(cObj) $(asmObj) | xargs -n1 | sort -u | xargs)
+
 
 
 all: kernel7.elf ;
 
-kernel7.elf: linker.ld start.o main.o
-	arm-none-eabi-gcc -T linker.ld -o kernel7.elf start.o main.o -ffreestanding -nostdlib -lgcc
 
-start.o: asm/start.s
-	arm-none-eabi-as -o start.o asm/start.s
+kernel7.elf: linker.ld $(obj)
+	arm-none-eabi-gcc -T linker.ld -o kernel7.elf $(obj) -ffreestanding -nostdlib -lgcc
 
-main.o: main.s
-	arm-none-eabi-as -o main.o main.s
-main.s: c/main.c
-	arm-none-eabi-gcc -S -o main.s c/main.c -I ./include
+$(cObj):
+	cd c && make
+
+start.o: start.s
+	arm-none-eabi-as -o start.o start.s
 
 
 install: all
@@ -26,4 +27,5 @@ install: all
 
 .PHONY: clean
 clean:
-	rm -rf *.s *.o *.elf install
+	cd c && make clean
+	rm -rf $(obj) *.elf install

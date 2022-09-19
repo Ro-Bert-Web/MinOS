@@ -1,26 +1,4 @@
-#include "BCM2837.h"
-
-typedef unsigned int uint;
-
-
-void write(int value, void *addr) {
-    *(uint*)addr = value;
-}
-int read(void *addr) {
-    return *(uint*)addr;
-}
-
-
-void ledInit() {
-    write(0x8, (void*)BCM2837_GPFSEL2);
-}
-void ledOn() {
-    write(1 << 21, (void*)BCM2837_GPSET0);
-}
-void ledOff() {
-    write(1 << 21, (void*)BCM2837_GPCLR0);
-}
-
+#include "led.h"
 
 void delay(int d) {
     while (d > 0) {
@@ -28,13 +6,12 @@ void delay(int d) {
     }
 }
 
-
 void main() {
-    ledInit();
+    initLED();
     while (1) {
-        ledOn();
+        turnLEDOn();
         delay(1000000);
-        ledOff();
+        turnLEDOff();
         delay(1000000);
     }
 }
