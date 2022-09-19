@@ -3,5 +3,4 @@ install
 *.o
 *.s
 *.elf
-!c
-!asm
+!start.s
