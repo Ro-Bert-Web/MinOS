@@ -2,7 +2,7 @@ ext     := .c
 asm     := .s
 obj     := .o
 cc      := arm-none-eabi-gcc
-ccflags := -I ../include
+ccflags := -Wno-builtin-declaration-mismatch -I ../include
 as      := arm-none-eabi-as
 asflags :=
 
@@ -18,7 +18,7 @@ all: $(require) $(objects) ;
 	@rm -f $@;\
 	$(cc) -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$@:"                                                          >> $@;\
 	$(cc) -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$(@:.d=$(obj)):" | sed "s:$(@:.d=$(ext)):$(@:.d=$(asm)):"     >> $@;\
-	echo "\t$(as) -o $(@:.d=$(obj)) $(@:.d=$(asm))"                                                                                 >> $@;\
+	echo "\t$(as) -o $(@:.d=$(obj)) $(asflags) $(@:.d=$(asm))"                                                                      >> $@;\
 	$(cc) -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$(@:.d=$(asm)):"                                              >> $@;\
 	echo "\t$(cc) -S -o $(@:.d=$(asm)) $(ccflags) $(@:.d=$(ext))"                                                                   >> $@
 
