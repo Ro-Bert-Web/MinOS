@@ -3,14 +3,14 @@
 #include "common.h"
 
 typedef enum {
-    IN = 0,
-    OUT = 1,
-    ALT0 = 4,
-    ALT1 = 5,
-    ALT2 = 6,
-    ALT3 = 7,
-    ALT4 = 3,
-    ALT5 = 2
+    IN = BCM2837_FSEL_INPUT,
+    OUT = BCM2837_FSEL_OUTPUT,
+    ALT0 = BCM2837_FSEL_ALT0,
+    ALT1 = BCM2837_FSEL_ALT1,
+    ALT2 = BCM2837_FSEL_ALT2,
+    ALT3 = BCM2837_FSEL_ALT3,
+    ALT4 = BCM2837_FSEL_ALT4,
+    ALT5 = BCM2837_FSEL_ALT5
 } FSEL;
 
 

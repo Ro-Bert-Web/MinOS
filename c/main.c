@@ -1,4 +1,4 @@
-#include "led.h"
+#include "gpio.h"
 
 void delay(int d) {
     while (d > 0) {
@@ -7,11 +7,11 @@ void delay(int d) {
 }
 
 void main() {
-    initLED();
+    gpio_fsel(21, OUT);
     while (1) {
-        turnLEDOn();
+        gpio_set(21);
         delay(1000000);
-        turnLEDOff();
+        gpio_clr(21);
         delay(1000000);
     }
 }
