@@ -3,7 +3,7 @@
 #include "BCM2837.h"
 
 ptr get_fselN(u32 n) {
-    return BCM2837_GPIO_FSEL0 + n * 4;
+    return BCM2837_GPFSEL0 + n * 4;
 }
 
 void gpio_fsel(u32 port, FSEL mode) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "BCM2837.h"
 
 typedef enum {
     IN = BCM2837_FSEL_INPUT,
