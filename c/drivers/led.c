@@ -1,13 +1,17 @@
 #include "led.h"
-#include "memory.h"
+#include "mem.h"
 #include "BCM2837.h"
+#include "gpio.h"
 
 void initLED() {
-    write(0x8, (void*)BCM2837_GPFSEL2);
+    gpio_fsel(21, OUT);
+    //write(0x8, BCM2837_GPFSEL2);
 }
 void turnLEDOn() {
-    write(1 << 21, (void*)BCM2837_GPSET0);
+    gpio_set(21);
+    //write(1 << 21, BCM2837_GPSET0);
 }
 void turnLEDOff() {
-    write(1 << 21, (void*)BCM2837_GPCLR0);
+    gpio_clr(21);
+    //write(1 << 21, BCM2837_GPCLR0);
 }

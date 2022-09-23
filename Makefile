@@ -9,11 +9,11 @@ obj     := $(shell echo $(cObj) $(asmObj) | xargs -n1 | sort -u | xargs)
 all: kernel7.elf ;
 
 
-kernel7.elf: linker.ld $(obj)
+kernel7.elf: linker.ld $(asmObj) cFiles
 	arm-none-eabi-gcc -T linker.ld -o kernel7.elf $(obj) -ffreestanding -nostdlib -lgcc
 
-$(cObj):
-	cd c && make
+cFiles:
+	@cd c && make
 
 start.o: start.s
 	arm-none-eabi-as -o start.o start.s
