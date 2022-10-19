@@ -27,3 +27,12 @@ void gpio_set(u32 port) {
 void gpio_clr(u32 port) {
     write(1 << port, BCM2837_GPCLR0);
 }
+
+void gpio_enable(u32 port) {
+    write(0, BCM2837_GPPUD);
+    for (u32 i = 0; i < 150; i++) {}
+    write(1 << port, BCM2837_GPPUDCLK0);
+    for (u32 i = 0; i < 150; i++) {}
+    write(0, BCM2837_GPPUD);
+    write(0, BCM2837_GPPUDCLK0);
+}

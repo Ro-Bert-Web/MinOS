@@ -9,7 +9,7 @@ obj     := $(shell echo $(cObj) $(asmObj) | xargs -n1 | sort -u | xargs)
 all: kernel7.elf ;
 
 
-kernel7.elf: linker.ld $(asmObj) cFiles
+kernel7.elf: linker.ld cFiles $(asmObj)
 	arm-none-eabi-gcc -T linker.ld -o kernel7.elf $(obj) -ffreestanding -nostdlib -lgcc
 
 cFiles:
