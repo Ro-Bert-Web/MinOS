@@ -9,3 +9,7 @@ typedef char i8;
 typedef unsigned int u32;
 typedef unsigned short u16;
 typedef unsigned char u8;
+
+extern u32 _start;
+extern u32 stack;
+extern u32 getsp();

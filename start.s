@@ -1,5 +1,7 @@
 .section ".text.boot"
 .global _start
+.global getsp
+.global stack
 
 _start:
     ldr sp, =stack
@@ -7,11 +9,15 @@ _start:
     ldr r0, =main
     blx r0
 
+getsp:
+    mov r0, sp
+    bx lr
+
 halt:
     wfe
     b halt
 
 .section ".data"
 .balign 4
-.skip 400
 stack:
+.skip 400

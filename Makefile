@@ -20,10 +20,11 @@ start.o: start.s
 
 
 install: all
-	mkdir install || rm -rf install/*
-	cp -r dependencies/* install
-	arm-none-eabi-objcopy kernel7.elf -O binary install/kernel7.img
-	test $(shell ls /media/isaiah | wc -l) -eq 1 && cp -r install/* /media/isaiah/* && umount /media/isaiah/* || echo "Please plug in exactly one drive"
+	@cat msg/installing
+	@mkdir install 2> /dev/null || rm -rf install/*
+	@cp -r dependencies/* install
+	@arm-none-eabi-objcopy kernel7.elf -O binary install/kernel7.img
+	@test $(shell ls /media/isaiah | wc -l) -eq 1 && cp -r install/* /media/isaiah/* && umount /media/isaiah/* && cat msg/install_success || cat msg/install_one_drive
 
 .PHONY: clean
 clean:
