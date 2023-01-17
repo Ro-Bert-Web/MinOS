@@ -1,32 +1,35 @@
+gnu     := aarch64-linux-gnu
 c       := $(shell find -type f -name "*.c")
 cObj    := $(c:.c=.o)
 asm     := $(shell find -type f -name "*.s")
 asmObj  := $(asm:.s=.o)
 obj     := $(shell echo $(cObj) $(asmObj) | xargs -n1 | sort -u | xargs)
+target  := kernel8
 
 
 
-all: kernel7.elf ;
+all: $(target).elf ;
 
 
-kernel7.elf: linker.ld cFiles $(asmObj)
-	arm-none-eabi-gcc -T linker.ld -o kernel7.elf $(obj) -ffreestanding -nostdlib -lgcc
+$(target).elf: linker.ld cFiles asmFiles
+	$(gnu)-ld -T linker.ld -o $(target).elf $(obj)
 
 cFiles:
 	@cd c && make
 
-start.o: start.s
-	arm-none-eabi-as -o start.o start.s
+asmFiles:
+	@cd asm && make
 
 
 install: all
 	@cat msg/installing
 	@mkdir install 2> /dev/null || rm -rf install/*
 	@cp -r dependencies/* install
-	@arm-none-eabi-objcopy kernel7.elf -O binary install/kernel7.img
-	@test $(shell ls /media/isaiah | wc -l) -eq 1 && cp -r install/* /media/isaiah/* && umount /media/isaiah/* && cat msg/install_success || cat msg/install_one_drive
+	@$(gnu)-objcopy $(target).elf -O binary install/$(target).img
+	@test $(shell ls /media/isaiah | wc -l) -eq 1 && rm /media/isaiah/*/* -r && cp -r install/* /media/isaiah/* && umount /media/isaiah/* && cat msg/install_success || cat msg/install_one_drive
 
 .PHONY: clean
 clean:
 	cd c && make clean
+	cd asm && make clean
 	rm -rf $(obj) *.elf install

@@ -1,9 +1,8 @@
+gnu     := aarch64-linux-gnu
 ext     := .c
 asm     := .s
 obj     := .o
-cc      := arm-none-eabi-gcc
 ccflags := -Wno-builtin-declaration-mismatch -I ../include
-as      := arm-none-eabi-as
 asflags :=
 
 sources := $(shell find -type f -name "*$(ext)")
@@ -16,11 +15,11 @@ all: $(require) $(objects) ;
 
 %.d: %$(ext)
 	@rm -f $@;\
-	$(cc) -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$@:"                                                          >> $@;\
-	$(cc) -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$(@:.d=$(obj)):" | sed "s:$(@:.d=$(ext)):$(@:.d=$(asm)):"     >> $@;\
-	echo "\t$(as) -o $(@:.d=$(obj)) $(asflags) $(@:.d=$(asm))"                                                                      >> $@;\
-	$(cc) -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$(@:.d=$(asm)):"                                              >> $@;\
-	echo "\t$(cc) -S -o $(@:.d=$(asm)) $(ccflags) $(@:.d=$(ext))"                                                                   >> $@
+	$(gnu)-gcc -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$@:"                                                         >> $@;\
+	$(gnu)-gcc -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$(@:.d=$(obj)):" | sed "s:$(@:.d=$(ext)):$(@:.d=$(asm)):"    >> $@;\
+	echo "\t$(gnu)-as -o $(@:.d=$(obj)) $(asflags) $(@:.d=$(asm))"                                                                      >> $@;\
+	$(gnu)-gcc -MM $(ccflags) $< | sed "s:$(shell basename $(@:.d=$(obj))):$(@:.d=$(asm)):"                                             >> $@;\
+	echo "\t$(gnu)-gcc -S -o $(@:.d=$(asm)) $(ccflags) $(@:.d=$(ext))"                                                                  >> $@
 
 include $(require)
 

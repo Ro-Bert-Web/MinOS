@@ -1,58 +1,32 @@
 #include "common.h"
-
+#include "utils.h"
 #include "gpio.h"
 #include "uart.h"
 #include "mem.h"
+#include "el.h"
+#include "kernel.h"
+#include "sys_regs.h"
 
-void print_num(u32 x) {
-    u32 byte = 8;
-    while (byte != 0) {
-        u32 hex = (x >> (4 * (byte - 1))) & 0xf;
-        if (hex < 10) {
-            uart_putc(hex + '0');
-        } else {
-            uart_putc(hex - 10 + 'a');
-        }
-        byte--;
-    }
+void kernel_main() {
+/*    uart_init();
+
+    uart_putstr("Hello World.\n");
+    u32 el = get_el();
+    uart_putnum(el);
+
+    delay(1000);*/
+
+    set_sctlr(1, SCTLR_RESERVED);
+    set_hcr(2, HCR_RW);
+    set_scr(3, SCR_RESERVED | SCR_RW | SCR_NS);
+    set_spsr(3, SPSR_MASK_ALL | SPSR_EL1h);
+    load_elr(3, (ptr)el1_entry);
 }
 
 void main() {
     uart_init();
-    gpio_fsel(21, OUT);
 
-    uart_putstr("Start: ");
-    print_num(_start);
-    uart_putstr("\nStack: ");
-    print_num(stack);
-    uart_putstr("\nStackP: ");
-    u32 sp = getsp();
-    print_num(sp);
-    uart_putstr("\n");
-
-    u32 addr = 0;
-    u32 special = 0;
-    do {
-        if (addr & 0x10000) {
-            gpio_set(21);
-        } else {
-            gpio_clr(21);
-        }
-
-        if (addr % 0x40 == 0) {
-            uart_putstr("\n");
-            print_num(addr);
-        }
-
-        u32 val = read(addr);
-        uart_putstr(" ");
-        if (val == 0x55555555) {
-            uart_putstr("|      |");
-        } else {
-            print_num(val);
-        }
-
-        addr += 4;
-    } while (addr != 0);
-    uart_putstr("\n\nMemory Bottom");
+    uart_putstr("Hello World.\n");
+    u32 el = get_el();
+    uart_putnum(el);
 }
