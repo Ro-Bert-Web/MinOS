@@ -8,7 +8,7 @@ target  := kernel8
 
 
 
-all: $(target).elf ;
+all: installation ;
 
 
 $(target).elf: linker.ld cFiles asmFiles
@@ -20,13 +20,17 @@ cFiles:
 asmFiles:
 	@cd asm && make
 
+installation: $(target).elf
+	mkdir install 2> /dev/null || rm -rf install/*
+	cp -r dependencies/* install
+	$(gnu)-objcopy $(target).elf -O binary install/$(target).img
 
-install: all
+install: installation
 	@cat msg/installing
-	@mkdir install 2> /dev/null || rm -rf install/*
-	@cp -r dependencies/* install
-	@$(gnu)-objcopy $(target).elf -O binary install/$(target).img
 	@test $(shell ls /media/isaiah | wc -l) -eq 1 && rm /media/isaiah/*/* -r && cp -r install/* /media/isaiah/* && umount /media/isaiah/* && cat msg/install_success || cat msg/install_one_drive
+
+qemu: installation
+	qemu-system-aarch64 -M raspi3 -kernel install/$(target).img
 
 .PHONY: clean
 clean:

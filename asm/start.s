@@ -9,7 +9,7 @@ _start:
     b halt
 
 launch:
-    ldr x0, =4096
+    ldr x0, =0x400000
     mov sp, x0
     mov fp, x0
 
@@ -17,13 +17,13 @@ launch:
     b halt
 
 el1_entry:
-    ldr x0, =4096
+    ldr x0, =0x400000
     mov sp, x0
     mov fp, x0
 
     bl main
     b halt
 
-halt:
-    wfe
-    b halt
+halt: 
+	b halt
+

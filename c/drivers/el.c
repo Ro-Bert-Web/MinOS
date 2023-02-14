@@ -2,7 +2,7 @@
 #include "el.h"
 #include "el_priv.h"
 
-void set_sctlr(u32 el, u32 val) {
+void set_sctlr(u32 el, u64 val) {
     switch (el) {
         case 1:
             set_sctlr_el1(val);
@@ -17,7 +17,7 @@ void set_sctlr(u32 el, u32 val) {
 }
 
 
-void set_hcr(u32 el, u32 val) {
+void set_hcr(u32 el, u64 val) {
     switch (el) {
         case 2:
             set_hcr_el2(val);
@@ -26,7 +26,7 @@ void set_hcr(u32 el, u32 val) {
 }
 
 
-void set_scr(u32 el, u32 val) {
+void set_scr(u32 el, u64 val) {
     switch (el) {
         case 3:
             set_scr_el3(val);
@@ -35,7 +35,7 @@ void set_scr(u32 el, u32 val) {
 }
 
 
-void set_spsr(u32 el, u32 val) {
+void set_spsr(u32 el, u64 val) {
     switch (el) {
         case 1:
             set_spsr_el1(val);
