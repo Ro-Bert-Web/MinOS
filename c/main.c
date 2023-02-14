@@ -18,7 +18,7 @@ void main() {
 }
 
 void kernel_main() {
-    /*uart_init();
+    uart_init();
 
     uart_putstr("Hello World.\n");
     u32 el = get_el();
@@ -29,11 +29,5 @@ void kernel_main() {
     set_hcr(2, HCR_RW);
     set_scr(3, SCR_RESERVED | SCR_RW | SCR_NS);
     set_spsr(3, SPSR_MASK_ALL | SPSR_EL1h);
-    load_elr(3, (ptr)el1_entry);*/
-
-    set_sctlr_el1(SCTLR_RESERVED);
-    set_hcr_el2(HCR_RW);
-    set_scr_el3(SCR_RESERVED | SCR_RW | SCR_NS);
-    set_spsr_el3(SPSR_MASK_ALL | SPSR_EL1h);
-    load_elr_el3((ptr)el1_entry);
+    load_elr(3, (ptr)el1_entry);
 }
