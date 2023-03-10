@@ -1,6 +1,7 @@
 .section ".text.boot"
 .global _start
 .global el1_entry
+.global halt
 
 _start:
     mrs x0, mpidr_el1
@@ -13,7 +14,7 @@ launch:
     mov sp, x0
     mov fp, x0
 
-    bl kernel_main
+    bl setup_cpu
     b halt
 
 el1_entry:
@@ -24,6 +25,5 @@ el1_entry:
     bl main
     b halt
 
-halt: 
-	b halt
-
+halt:
+    b halt

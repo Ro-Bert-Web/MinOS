@@ -27,7 +27,7 @@ installation: $(target).elf
 
 install: installation
 	@cat msg/installing
-	@test $(shell ls /media/isaiah | wc -l) -eq 1 && rm /media/isaiah/*/* -r && cp -r install/* /media/isaiah/* && umount /media/isaiah/* && cat msg/install_success || cat msg/install_one_drive
+	@test $(shell ls /media/isaiah | wc -l) -eq 1 && rm -f /media/isaiah/*/* -r && cp -r install/* /media/isaiah/* && umount /media/isaiah/* && cat msg/install_success || cat msg/install_one_drive
 
 qemu: installation
 	qemu-system-aarch64 -M raspi3 -kernel install/$(target).img
