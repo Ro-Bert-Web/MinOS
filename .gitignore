@@ -1,6 +1,4 @@
 install
 *.d
 *.o
-*.s
 *.elf
-!start.s

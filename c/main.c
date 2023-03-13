@@ -1,17 +1,16 @@
 #include "common.h"
 
-#include "utils.h"
-
-#include "gpio.h"
-#include "uart.h"
-
 #include "el.h"
 #include "sys_regs.h"
 #include "kernel.h"
-
 #include "timer.h"
 #include "interrupts.h"
 
+#include "procs.h"
+#include "print.h"
+
+
+extern int fib_main();
 
 void setup_cpu() {
     set_sctlr(1, SCTLR_RESERVED);
@@ -22,19 +21,16 @@ void setup_cpu() {
 }
 
 void main() {
-    uart_init();
-    uart_putstr("MinOS\n");
-    u32 el = get_el();
-    uart_putnum(el);
-    uart_putstr("\n");
+    init_print();
+    print("MinOS\n");
 
     vtable_init();
     init_timer(200000);
     enable_timer_interrupt();
     enable_irq();
 
-    while (1) {
-        uart_putstr("line\n");
-        delay(300000);
-    }
+    init_procs();
+    exec((ptr)fib_main);
+
+    while (1) {}
 }

@@ -29,19 +29,6 @@ void uart_putstr(char *str) {
     }
 }
 
-void uart_putnum(u32 x) {
-    u32 byte = 8;
-    while (byte != 0) {
-        u32 hex = (x >> (4 * (byte - 1))) & 0xf;
-        if (hex < 10) {
-            uart_putc(hex + '0');
-        } else {
-            uart_putc(hex - 10 + 'a');
-        }
-        byte--;
-    }
-}
-
 
 
 void uart_putc(char c) {

@@ -1,7 +1,7 @@
 #include "interrupts.h"
 #include "mem.h"
 #include "timer.h"
-#include "uart.h"
+#include "print.h"
 
 void enable_timer_interrupt() {
     write(SYSTEM_TIMER_IRQ_1, ENABLE_IRQS_1);
@@ -9,13 +9,13 @@ void enable_timer_interrupt() {
 
 
 void invalid_interrupt(u64 type, u64 esr, u64 elr) {
-    uart_putstr("Invalid Interrupt ");
-    uart_putnum(type);
-    uart_putc(' ');
-    uart_putnum(esr);
-    uart_putc(' ');
-    uart_putnum(elr);
-    uart_putstr("\n");
+    print("Invalid Interrupt ");
+    print_num(type);
+    print(" ");
+    print_num(esr);
+    print(" ");
+    print_num(elr);
+    print_endl();
 }
 
 void handle_irq() {
@@ -24,9 +24,9 @@ void handle_irq() {
         case SYSTEM_TIMER_IRQ_1:
             init_timer(200000);
             write(TIMER_CS_M1, TIMER_CS);
-            uart_putstr("Timer Interrupt\n");
+            print("Timer Interrupt\n");
             break;
         default:
-            uart_putstr("Unknown IRQ\n");
+            print("Unknown IRQ\n");
     }
 }
