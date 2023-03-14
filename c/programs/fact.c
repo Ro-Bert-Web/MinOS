@@ -2,13 +2,12 @@
 #include "print.h"
 #include "procs.h"
 
-void fib_main() {
-    int i = 0, j = 1;
+void fact_main() {
+    int fact = 1, i = 1;
 
     while (1) {
-        int k = i + j;
-        i = j;
-        j = k;
+        fact *= i;
+        i++;
 
         for (int i = 0; i < curr_pid; i++) {
             for (int j = 0; j < 30; j++) {
@@ -20,7 +19,7 @@ void fib_main() {
         print(" ");
         print_hex(get_sp());
         print(" ");
-        print_num(i);
+        print_num(fact);
         print_endl();
         delay(1000000);
     }

@@ -10,7 +10,7 @@ _start:
     b halt
 
 launch:
-    ldr x0, =0x400000
+    ldr x0, stack_size
     mov sp, x0
     mov fp, x0
 
@@ -18,7 +18,7 @@ launch:
     b halt
 
 el1_entry:
-    ldr x0, =0x400000
+    ldr x0, stack_size
     mov sp, x0
     mov fp, x0
 

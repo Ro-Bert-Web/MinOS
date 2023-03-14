@@ -9,11 +9,11 @@ vtable_init:
     ret
 
 enable_irq:
-    msr daifclr, #0
+    msr daifclr, #2
     ret
 
 disable_irq:
-    msr daifset, #0
+    msr daifset, #2
     ret
 
 
@@ -88,7 +88,7 @@ vectors:
     ventry fiq_invalid_el1t
     ventry error_invalid_el1t
 
-    ventry sync_invalid_el1h
+    ventry el1_sync
     ventry el1_irq
     ventry fiq_invalid_el1h
     ventry error_invalid_el1h
@@ -150,7 +150,26 @@ error_invalid_el0_32:
     handle_invalid_entry 15
 
 
+el1_sync:
+    kernel_entry
+    mov x0, sp
+    ldr x1, [sp, #8 * 0]
+    bl handle_sys_call
+    #ldr x0, [sp, #8 * 0]
+    kernel_exit
+
 el1_irq:
     kernel_entry
+
+    mov x2, x1
+    mov x1, x0
+
+    mov x0, sp
     bl handle_irq
+
+    ldr w0, curr_pid
+    mov x1, sp
+    bl swap
+    mov sp, x0
+
     kernel_exit

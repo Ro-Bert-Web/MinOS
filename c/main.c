@@ -10,7 +10,10 @@
 #include "print.h"
 
 
-extern int fib_main();
+extern void line_main();
+extern void square_main();
+extern void fib_main();
+extern void fact_main();
 
 void setup_cpu() {
     set_sctlr(1, SCTLR_RESERVED);
@@ -25,12 +28,24 @@ void main() {
     print("MinOS\n");
 
     vtable_init();
-    init_timer(200000);
+    init_timer(FRAME_LENGTH);
     enable_timer_interrupt();
     enable_irq();
 
     init_procs();
-    exec((ptr)fib_main);
 
-    while (1) {}
+    while (fork() != 0);
+
+    switch (curr_pid) {
+        case 0:
+            exec((ptr)line_main);
+        case 1:
+            exec((ptr)square_main);
+        case 2:
+            exec((ptr)fib_main);
+        case 3:
+            exec((ptr)fact_main);
+    }
+
+    halt();
 }

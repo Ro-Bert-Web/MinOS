@@ -1,6 +1,11 @@
 .section ".text"
+.global get_sp
 .global get_el
 .global delay
+
+get_sp:
+    mov x0, sp
+    ret
 
 get_el:
     mrs x0, CurrentEL

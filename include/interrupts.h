@@ -8,10 +8,11 @@ extern void enable_irq();
 extern void disable_irq();
 
 
+#define FRAME_LENGTH 1000
 void enable_timer_interrupt();
 
 void invalid_interrupt(u64 type, u64 esr, u64 elr);
-void handle_irq();
+void handle_irq(ptr stack, u32 esr, u32 elr);
 
 
 #define IRQ_BASIC_PENDING   (PBASE + 0xB200)

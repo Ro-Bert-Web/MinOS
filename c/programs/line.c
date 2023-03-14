@@ -2,13 +2,11 @@
 #include "print.h"
 #include "procs.h"
 
-void fib_main() {
-    int i = 0, j = 1;
+void line_main() {
+    int x = 0;
 
     while (1) {
-        int k = i + j;
-        i = j;
-        j = k;
+        x++;
 
         for (int i = 0; i < curr_pid; i++) {
             for (int j = 0; j < 30; j++) {
@@ -20,7 +18,7 @@ void fib_main() {
         print(" ");
         print_hex(get_sp());
         print(" ");
-        print_num(i);
+        print_num(x);
         print_endl();
         delay(1000000);
     }
