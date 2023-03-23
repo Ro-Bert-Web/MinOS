@@ -1,3 +1,4 @@
+#include "time.h"
 #include "utils.h"
 #include "print.h"
 #include "procs.h"
@@ -5,7 +6,7 @@
 void fib_main() {
     int i = 0, j = 1;
 
-    while (1) {
+    while (i < 10000) {
         int k = i + j;
         i = j;
         j = k;
@@ -22,6 +23,6 @@ void fib_main() {
         print(" ");
         print_num(i);
         print_endl();
-        delay(1000000);
+        sleep(1000);
     }
 }

@@ -1,4 +1,5 @@
 #include "procs.h"
+#include "kernel.h"
 #include "sys.h"
 #include "utils.h"
 #include "mem.h"
@@ -65,6 +66,12 @@ u32 fork() {
     }
 }
 
+void exit_proc() {
+    stacks[curr_pid] = 0;
+    sys_call(BLOCK);
+    halt();
+}
+
 
 
 u32 scheduler() {
@@ -72,12 +79,13 @@ u32 scheduler() {
     do {
         new_pid++;
         new_pid %= MAX_PROCS;
+
+        if (new_pid == curr_pid)
+            halt();
     } while (stacks[new_pid] == 0);
     return new_pid;
 }
 
-ptr swap(u32 prev_pid, ptr sp) {
-    stacks[prev_pid] = sp;
-    curr_pid = scheduler();
-    return stacks[curr_pid];
+void swap (u32 pid) {
+    curr_pid = pid;
 }

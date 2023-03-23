@@ -12,5 +12,7 @@ void init_procs();
 u32 dup_proc();
 u32 fork();
 void exec(ptr func);
+void exit_proc();
 
-ptr swap(u32 prev_pid, ptr sp);
+u32 scheduler();
+void swap(u32 pid);

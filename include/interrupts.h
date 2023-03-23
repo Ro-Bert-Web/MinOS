@@ -7,12 +7,15 @@ extern void vtable_init();
 extern void enable_irq();
 extern void disable_irq();
 
+void save_stack(ptr stack);
+ptr restore_stack();
 
-#define FRAME_LENGTH 1000
+
+#define FRAME_LENGTH 100
 void enable_timer_interrupt();
 
-void invalid_interrupt(u64 type, u64 esr, u64 elr);
-void handle_irq(ptr stack, u32 esr, u32 elr);
+void invalid_interrupt(u32 type, u32 esr, u32 elr);
+void handle_irq();
 
 
 #define IRQ_BASIC_PENDING   (PBASE + 0xB200)

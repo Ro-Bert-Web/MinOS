@@ -1,3 +1,4 @@
+#include "time.h"
 #include "utils.h"
 #include "print.h"
 #include "procs.h"
@@ -5,7 +6,7 @@
 void line_main() {
     int x = 0;
 
-    while (1) {
+    while (x < 25) {
         x++;
 
         for (int i = 0; i < curr_pid; i++) {
@@ -20,6 +21,6 @@ void line_main() {
         print(" ");
         print_num(x);
         print_endl();
-        delay(1000000);
+        sleep(1000);
     }
 }

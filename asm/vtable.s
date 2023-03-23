@@ -53,9 +53,15 @@ disable_irq:
     mrs x0, esr_el1
     mrs x1, elr_el1
     stp x0, x1, [sp, #16 * 16]
+
+    mov x0, sp
+    bl save_stack
 .endm
 
 .macro kernel_exit
+    bl restore_stack
+    mov sp, x0
+
     ldp x0, x1, [sp, #16 * 16]
     msr esr_el1, x0
     msr elr_el1, x1
@@ -152,24 +158,11 @@ error_invalid_el0_32:
 
 el1_sync:
     kernel_entry
-    mov x0, sp
-    ldr x1, [sp, #8 * 0]
+    ldr x0, [sp, #8 * 0]
     bl handle_sys_call
-    #ldr x0, [sp, #8 * 0]
     kernel_exit
 
 el1_irq:
     kernel_entry
-
-    mov x2, x1
-    mov x1, x0
-
-    mov x0, sp
     bl handle_irq
-
-    ldr w0, curr_pid
-    mov x1, sp
-    bl swap
-    mov sp, x0
-
     kernel_exit

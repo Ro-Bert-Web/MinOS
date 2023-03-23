@@ -1,3 +1,4 @@
+#include "time.h"
 #include "utils.h"
 #include "print.h"
 #include "procs.h"
@@ -5,7 +6,7 @@
 void fact_main() {
     int fact = 1, i = 1;
 
-    while (1) {
+    while (fact < 1000000) {
         fact *= i;
         i++;
 
@@ -21,6 +22,6 @@ void fact_main() {
         print(" ");
         print_num(fact);
         print_endl();
-        delay(1000000);
+        sleep(1000);
     }
 }

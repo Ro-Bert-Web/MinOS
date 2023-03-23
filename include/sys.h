@@ -3,8 +3,9 @@
 #include "common.h"
 
 typedef enum {
-    FORK
+    FORK,
+    BLOCK
 } SYS_Calls;
 
-u32 sys_call();
-u32 handle_sys_call(ptr stack, u32 code);
+u32 sys_call(u32 code);
+u32 handle_sys_call(u32 code);

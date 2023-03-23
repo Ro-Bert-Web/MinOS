@@ -8,6 +8,7 @@
 
 #include "procs.h"
 #include "print.h"
+#include "time.h"
 
 
 extern void line_main();
@@ -40,12 +41,14 @@ void main() {
         case 0:
             exec((ptr)line_main);
         case 1:
+            sleep(10);
             exec((ptr)square_main);
         case 2:
+            sleep(20);
             exec((ptr)fib_main);
         case 3:
+            sleep(30);
             exec((ptr)fact_main);
     }
-
-    halt();
+    exit_proc();
 }
