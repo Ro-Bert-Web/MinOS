@@ -3,18 +3,10 @@
 #include "el.h"
 #include "sys_regs.h"
 #include "kernel.h"
-#include "timer.h"
-#include "interrupts.h"
 
-#include "procs.h"
 #include "print.h"
-#include "time.h"
+#include "utils.h"
 
-
-extern void line_main();
-extern void square_main();
-extern void fib_main();
-extern void fact_main();
 
 void setup_cpu() {
     set_sctlr(1, SCTLR_RESERVED);
@@ -24,31 +16,17 @@ void setup_cpu() {
     load_elr(3, (ptr)el1_entry);
 }
 
-void main() {
+void kernel_main() {
     init_print();
     print("MinOS\n");
+    print("Press ctrl+a,d to exit screen\n");
 
-    vtable_init();
-    init_timer(FRAME_LENGTH);
-    enable_timer_interrupt();
-    enable_irq();
+    print("Exception Level: ");
+    u32 x = get_el();
+    print_num(x);
+    print("\n");
 
-    init_procs();
-
-    while (fork() != 0);
-
-    switch (curr_pid) {
-        case 0:
-            exec((ptr)line_main);
-        case 1:
-            sleep(10);
-            exec((ptr)square_main);
-        case 2:
-            sleep(20);
-            exec((ptr)fib_main);
-        case 3:
-            sleep(30);
-            exec((ptr)fact_main);
-    }
-    exit_proc();
+    print("Stack Pointer: ");
+    print_hex(get_sp());
+    print("\n");
 }

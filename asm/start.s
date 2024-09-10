@@ -1,16 +1,16 @@
 .section ".text.boot"
-.global _start
+.global start
 .global el1_entry
 .global halt
 
-_start:
+start:
     mrs x0, mpidr_el1
     and x0, x0, #0xff
     cbz x0, launch
     b halt
 
 launch:
-    ldr x0, stack_size
+    adr x0, stack
     mov sp, x0
     mov fp, x0
 
@@ -18,11 +18,11 @@ launch:
     b halt
 
 el1_entry:
-    ldr x0, stack_size
+    adr x0, stack
     mov sp, x0
     mov fp, x0
 
-    bl main
+    bl kernel_main
     b halt
 
 halt:

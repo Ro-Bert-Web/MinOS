@@ -32,6 +32,10 @@ install: installation
 qemu: installation
 	qemu-system-aarch64 -M raspi3 -kernel install/$(target).img
 
+.PHONY: screen
+screen:
+	screen /dev/ttyUSB0 115200
+
 .PHONY: clean
 clean:
 	cd c && make clean

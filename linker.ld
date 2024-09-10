@@ -1,4 +1,4 @@
-ENTRY(_start)
+ENTRY(start)
  
 SECTIONS {
     .text : {
@@ -12,12 +12,13 @@ SECTIONS {
         *(.data)
     }
     . = ALIGN(0x8);
-    __bss_start = .;
+    bss_start = .;
     .bss : {
         bss = .;
         *(.bss)
     }
-    __bss_end = .;
-    __bss_size = __bss_end - __bss_start;
-    __end = .;
+    bss_end = .;
+    bss_size = bss_end - bss_start;
+    end = .;
+    stack = 0x40000;
 }

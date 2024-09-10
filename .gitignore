@@ -2,3 +2,5 @@ install
 *.d
 *.o
 *.elf
+c/*.s
+c/*/*.s

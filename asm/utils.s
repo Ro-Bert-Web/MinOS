@@ -1,7 +1,12 @@
 .section ".text"
+.global sys_call
 .global get_sp
 .global get_el
 .global delay
+
+sys_call:
+    svc #0
+    ret
 
 get_sp:
     mov x0, sp
