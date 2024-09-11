@@ -6,7 +6,7 @@
 #include "drivers/gpio.h"
 #include "libraries/print.h"
 #include "utils.h"
-
+#include "libraries/time.h"
 
 void setup_cpu() {
     set_sctlr(1, SCTLR_RESERVED);
@@ -19,29 +19,23 @@ void setup_cpu() {
 void kernel_main() {
     gpio_fsel(21, OUT);
     init_print();
+
+    vtable_init();
+    enable_irq();
+    init_timer(250000);
+    enable_timer_interrupt();
+
     print("MinOS\n");
     print("Press ctrl+a,d to exit screen\n");
 
-    print("Exception Level: ");
-    u32 x = get_el();
-    print_num(x);
-    print("\n");
-
-    delay(10000000);
-
-    print("Stack Pointer: ");
-    print_hex(get_sp());
-    print("\n");
-
-    vtable_init();
-    init_timer(100);
-    enable_timer_interrupt();
-    //enable_irq(); // enabling this breaks the code
-
+    int i = 1;
+    int j = 1;
     while (1) {
-        gpio_set(21);
-        delay(10000000);
-        gpio_clr(21);
-        delay(10000000);
+        int k = i + j;
+        i = j;
+        j = k;
+        print_num(i);
+        print_endl();
+        sleep(1000);
     }
 }

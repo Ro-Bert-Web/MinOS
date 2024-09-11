@@ -54,14 +54,10 @@ disable_irq:
     mrs x1, elr_el1
     stp x0, x1, [sp, #16 * 16]
 
-    mov x0, sp
-    bl save_stack
+    mov fp, sp
 .endm
 
 .macro kernel_exit
-    bl restore_stack
-    mov sp, x0
-
     ldp x0, x1, [sp, #16 * 16]
     msr esr_el1, x0
     msr elr_el1, x1

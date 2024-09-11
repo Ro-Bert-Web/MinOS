@@ -7,9 +7,6 @@ extern void vtable_init();
 extern void enable_irq();
 extern void disable_irq();
 
-void save_stack(ptr stack);
-ptr restore_stack();
-
 void enable_timer_interrupt();
 
 void invalid_interrupt(u32 type, u32 esr, u32 elr);

@@ -5,5 +5,4 @@ void init_timer(u32 interval) {
     u32 time = read(TIMER_CLO);
     time += interval;
     write(time, TIMER_C1);
-    write(TIMER_CS_M1, TIMER_CS);
 }
