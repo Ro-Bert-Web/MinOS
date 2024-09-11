@@ -1,6 +1,5 @@
-#include "gpio.h"
-#include "mem.h"
-#include "BCM2837.h"
+#include "drivers/gpio.h"
+#include "drivers/mem.h"
 
 ptr get_fselN(u32 n) {
     return BCM2837_GPFSEL0 + n * 4;

@@ -1,5 +1,5 @@
-#include "print.h"
-#include "uart.h"
+#include "libraries/print.h"
+#include "drivers/uart.h"
 
 void init_print() {
     uart_init();

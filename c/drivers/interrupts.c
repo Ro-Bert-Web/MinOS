@@ -1,24 +1,20 @@
-#include "interrupts.h"
+#include "drivers/interrupts.h"
 #include "kernel.h"
-#include "procs.h"
-#include "mem.h"
-#include "timer.h"
-#include "utils.h"
-#include "print.h"
+#include "drivers/mem.h"
+#include "drivers/timer.h"
+
+#include "libraries/print.h"
 
 void save_stack(ptr stack) {
-    stacks[curr_pid] = stack;
 }
 
 ptr restore_stack() {
-    return stacks[curr_pid];
+    return 0;
 }
-
 
 void enable_timer_interrupt() {
     write(SYSTEM_TIMER_IRQ_1, ENABLE_IRQS_1);
 }
-
 
 void invalid_interrupt(u32 type, u32 esr, u32 elr) {
     print("Invalid Interrupt ");
@@ -34,9 +30,9 @@ void handle_irq() {
     u32 irq = read(IRQ_PENDING_1);
     switch(irq) {
         case SYSTEM_TIMER_IRQ_1:
-            swap(scheduler());
-            write(TIMER_CS_M1, TIMER_CS);
-            init_timer(FRAME_LENGTH);
+            print("Timer");
+            //init_timer(100);
+            //write(TIMER_CS_M1, TIMER_CS);
             break;
         default:
             print("Unknown IRQ\n");

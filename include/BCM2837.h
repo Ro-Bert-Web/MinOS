@@ -18,6 +18,8 @@
 
 #define PI3_BREAK				asm volatile("brk #0");
 
+#define BCM2837_PBASE 0x3f000000
+
 #define BCM2837_GPIO_BASE	0x3F200000
 #define BCM2837_GPIO_SIZE	0xA0
 #define BCM2837_GPFSEL0		0x3F200000

@@ -1,6 +1,20 @@
-#include "common.h"
-#include "el.h"
-#include "el_priv.h"
+#include "drivers/el.h"
+
+extern void set_sctlr_el1(u64 val);
+extern void set_sctlr_el2(u64 val);
+extern void set_sctlr_el3(u64 val);
+
+extern void set_hcr_el2(u64 val);
+
+extern void set_scr_el3(u64 val);
+
+extern void set_spsr_el1(u64 val);
+extern void set_spsr_el2(u64 val);
+extern void set_spsr_el3(u64 val);
+
+extern void load_elr_el1(ptr val);
+extern void load_elr_el2(ptr val);
+extern void load_elr_el3(ptr val);
 
 void set_sctlr(u32 el, u64 val) {
     switch (el) {

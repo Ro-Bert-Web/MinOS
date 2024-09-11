@@ -8,4 +8,3 @@ typedef enum {
 } SYS_Calls;
 
 u32 sys_call(u32 code);
-u32 handle_sys_call(u32 code);

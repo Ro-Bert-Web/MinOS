@@ -1,7 +1,7 @@
-#include "time.h"
-#include "sys.h"
-#include "timer.h"
-#include "mem.h"
+#include "libraries/time.h"
+#include "drivers/mem.h"
+#include "libraries/sys.h"
+#include "drivers/timer.h"
 
 void sleep(u32 ms) {
     u32 time = read(TIMER_CLO);

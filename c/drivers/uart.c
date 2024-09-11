@@ -1,7 +1,6 @@
-#include "uart.h"
-
-#include "gpio.h"
-#include "mem.h"
+#include "drivers/uart.h"
+#include "drivers/gpio.h"
+#include "drivers/mem.h"
 
 void uart_init() {
     gpio_fsel(14, ALT5);
